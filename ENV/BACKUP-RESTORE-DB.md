@@ -55,6 +55,10 @@ gcloud sql export sql ${BK_INSTANCE} ${BK_BUCKET}/backups/${BK_FILE} \
 # download backup
 gcloud storage cp ${BK_BUCKET}/backups/${BK_FILE} .
 
+
+gcloud storage cp gs://heidless-pfolio-0-bucket/images/* .
+
+
 # upload backup
 
 gcloud storage cp ${BK_FILE} ${BK_BUCKET}/backups/${BK_FILE}

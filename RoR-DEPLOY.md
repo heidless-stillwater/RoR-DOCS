@@ -229,9 +229,10 @@ stripe:
   test_secret_key: sk_test_51PLjRQGNOeNKBTc3eZKbQPlaUWyanXsmwNlHyHkiCUL0AmaG69zx6h2TOOxvXHm6XphlGbQTgr2ML9gzyEmj9mS600VMH0777F 
 sendgrid_mailer:
   user_name: apikey
-  api_key_secret: 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
-  domain_svc: photo-app-1-svc-cbw4u67gqa-ew.a.run.app
-  domain: fundingcloud.co.uk
+  api_key_secret: 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
+  domain_svc: photo-app-3-svc-cbw4u67gqa-ew.a.run.app
+  mail_sender: support@westgreenconnection.co.uk
+  domain: westgreenconnection.co.uk
   auth_token: f6817edca25a334e5e49bf7fb77d8451
   user_login: lockhart.r@gmail.com
   user_sid: USac89b5bfb4ac2f1c924169bae9cf7a22
@@ -265,7 +266,7 @@ gcloud secrets describe $GCP_SECRET_NAME
 gcloud secrets versions access latest --secret $GCP_SECRET_NAME
 
 ---
-0bcafedda94de32d70431034bf5008f0%
+38f6c4c4cb1e5edc0c6b32c65ff677ed
 
 ```
 
@@ -303,6 +304,8 @@ echo "PRODUCTION_DB_USERNAME: $GCP_DB_USER" >> .env
 echo "CLOUD_SQL_CONNECTION_NAME: $GCP_PROJECT_NAME:$GCP_REGION:$GCP_INSTANCE" >> .env
 echo "GOOGLE_PROJECT_ID: $GCP_PROJECT_NAME" >> .env
 echo "STORAGE_BUCKET_NAME: $GCP_BUCKET_NAME" >> .env
+echo "SENDGRID_API_KEY: $GCP_SENDGRID_API_KEY" >> .env
+more .env
 
 ```
 
@@ -339,6 +342,7 @@ echo $GCP_SERVICE_NAME
 echo $GCP_REGION
 echo $GCP_PROJECT_NAME
 echo $GCP_INSTANCE
+echo $GCP_SECRET_NAME
 echo ' '
 
 gcloud run deploy $GCP_SERVICE_NAME \

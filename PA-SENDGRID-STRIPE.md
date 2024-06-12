@@ -1,83 +1,35 @@
+# New Domain
+- ## new domain name
+  ```
+    westgreenconnection.co.uk
+
+  ```
+- ## verify with google
+  - ### [verify domain](https://search.google.com/search-console/welcome?sjid=2772788460648112693-EU)
+
+- ## verify with sendgrid
+  - ### [Sendgrid: Domain Authentication](https://app.sendgrid.com/settings/sender_auth/domain/create)
 
 # [verify domain ownership](https://support.google.com/webmasters/answer/9008080?hl=en&sjid=2772788460648112693-EU)
 - ### [Add a website property to Search Console](https://support.google.com/webmasters/answer/34592?sjid=2772788460648112693-EU)
   - ### [verify domain](https://search.google.com/search-console/welcome?sjid=2772788460648112693-EU)
-```
-https://photo-app-1-svc-wei2spmagq-ew.a.run.app
+  ```
+    verify the domain with google i.e. heidless.co.uk
 
+  ```
 
-heidless.com
-photo-app-0-svc
-https://photo-app-0-svc-wei2spmagq-ew.a.run.app
-123-reg DNS
---
-A 216.239.32.21
-A 216.239.34.21
-A 216.239.36.21
-A 216.239.38.21
-AAAA 2001:4860:4802:32::15
-AAAA 2001:4860:4802:34::15
-AAAA 2001:4860:4802:36::15
-AAAA 2001:4860:4802:38::15
---
+# [sendgrid admin](https://app.sendgrid.com)
+  - ## [Sendgrid: API Keys](https://app.sendgrid.com/settings/api_keys)
+  - ## [Sendgrid: Sender Authentication](https://app.sendgrid.com/settings/sender_auth)
+      - ## [Sendgrid: Domain Authentication](https://app.sendgrid.com/settings/sender_auth/domain/create)
+      ```
+        define:
+          main_sender
+          domain
 
-fundingcloud.co.uk
-https://photo-app-1-svc-wei2spmagq-ew.a.run.app
-123-reg DNS
-VERIFY DOMAIN
---
-CNAME Label:
-ezewzmkdcwhs
+      ```
 
-CNAME Destination:
-gv-wd7uo4qea3a7ys.dv.googlehosted.com
-
---
---
-
-
-
-
-
-
-
-
-fundingcloud.com
-???????????????????https://photo-app-1-svc-wei2spmagq-ew.a.run.app
-123-reg DNS
-VERIFY DOMAIN
---
-CNAME Label:
-q66mqy56bhqy
-
-CNAME Destination:
-gv-cqr7dwxx3jbdqr.dv.googlehosted.com
-
---
---
-A 216.239.32.21
-A 216.239.34.21
-A 216.239.36.21
-A 216.239.38.21
-AAAA 2001:4860:4802:32::15
-AAAA 2001:4860:4802:34::15
-AAAA 2001:4860:4802:34::15
-AAAA 2001:4860:4802:38::15
-
---
-
-
-
-
---
-
-
-
-
-
-```
-
-# Configure Domain
+# Configure Custom Domain
 ```
 DOMAIN: heidless.com
 
@@ -151,10 +103,6 @@ DOMAIN: heidless.com
 
 ###################
 ###################
-
-
-
-
 
 
 - ### [configure SENDGRID](https://sendgrid.com/en-us)
