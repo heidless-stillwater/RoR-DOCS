@@ -90,15 +90,20 @@ gcloud init
 #gcloud sql instances patch alpha-blog-0-instance-0 \
 #    --no-deletion-protection
 
-#################
+#########
 source ./config/.env-vars
-#source .env-vars
 
-# create the instance
-zsh RoR-DOCS/RoR-CREATE-INSTANCE
-history
+zsh ../../../RoR-DOCS/RoR-CREATE-INSTANCE
 
-#################
+# initialise Cloud Run - generates servoce account
+Cloud Run->Create Service->Select->Demo Containers->hello
+
+# initialise Cloud Buld - generates service account
+Cloud Buld->Enable API
+
+#########
+
+
 echo $GCP_INSTANCE
 echo $GCP_PROJECT_NAME
 echo ' '
@@ -109,10 +114,10 @@ gcloud sql instances delete $GCP_INSTANCE \
 
 ## create Instance
 ```
-echo $GCP_INSTANCE
-echo $GCP_PROJECT_NAME
-echo $GCP_DB_VERSION
-echo $GCP_REGION
+echo INSTANCE: $GCP_INSTANCE
+echo PROJECT: $GCP_PROJECT_NAME
+echo DB_VERSION: $GCP_DB_VERSION
+echo REGION: $GCP_REGION
 echo ' '
 gcloud sql instances create $GCP_INSTANCE \
     --project $GCP_PROJECT_NAME \
@@ -120,22 +125,22 @@ gcloud sql instances create $GCP_INSTANCE \
     --tier db-f1-micro \
     --region $GCP_REGION 
 
-#    --root-password=$GCP_INSTANCE_ROOT_PWD
 
 # public instance IP
-echo $GCP_INSTANCE
-echo $GCP_PROJECT_NAME
-
+echo INSTANCE: $GCP_INSTANCE
+echo PROJECT: $GCP_PROJECT_NAME
+echo ' '
 gcloud sql instances describe $GCP_INSTANCE \
 --project=$GCP_PROJECT_NAME | grep ipAddress:
+
 --
 35.197.255.67
 --
 ```
 
-## set password on 'postgress' user
+## set password on 'postgres' user
 ```
-echo $GCP_INSTANCE
+echo INSTANCE: $GCP_INSTANCE
 echo ' '
 gcloud sql users set-password postgres \
 --instance=$GCP_INSTANCE \
@@ -149,8 +154,8 @@ gcloud sql databases delete $GCP_DB_NAME \
     --instance $GCP_INSTANCE
 
 echo 'create DB'
-echo $GCP_DB_NAME
-echo $GCP_INSTANCE
+echo DB: $GCP_DB_NAME
+echo INSTANCE: $GCP_INSTANCE
 echo ' '
 gcloud sql databases create $GCP_DB_NAME \
     --instance $GCP_INSTANCE
@@ -166,8 +171,8 @@ gcloud sql databases create $GCP_DB_NAME \
 cat /dev/urandom | LC_ALL=C tr -dc '[:alpha:]'| fold -w 50 | head -n1 > dbpassword
 
 ---
-echo $GCP_DB_USER
-echo $GCP_INSTANCE
+echo DB_USER: $GCP_DB_USER
+echo INSTANCE: $GCP_INSTANCE
 echo ' '
 gcloud sql users create $GCP_DB_USER \
    --instance=$GCP_INSTANCE --password=$(cat dbpassword)
@@ -178,6 +183,7 @@ gcloud sql users create $GCP_DB_USER \
 ### [storage bucket](https://console.cloud.google.com/storage/browser?referrer=search&project=heidless-pfolio-deploy-5&prefix=&forceOnBucketsSortingFiltering=true)
 
 ```
+echo BUCKET: $GCP_BUCKET_NAME
 export bucket_path='gs://'$GCP_BUCKET_NAME
 echo $bucket_path
 
@@ -212,6 +218,14 @@ sudo apt-get install sublime-text
 ### sets up encryped crtedentials for use in live
 
 ```
+# set env
+/bin/zsh --login
+# rvm install 2.6.3 --with-openssl-dir=$HOME/.rvm/usr
+export PATH="/home/heidless/.rvm/gems/ruby-3.2.2/bin:$PATH"
+
+rm Gemfile.lock
+bundle install
+
 # make sure to delete previous config/credentials.yml.enc
 rm config/credentials.yml.enc config/master.key
 ---
@@ -219,17 +233,12 @@ rm config/credentials.yml.enc config/master.key
 EDITOR='subl --wait' ./bin/rails credentials:edit
 
 ---
-# potentially setup other definitions: 
-#   GCP_DB_NAME_production
-#   cloud_sql_connection_name
-#   google_GCP_PROJECT_ID
-#   storage_bucket_id
 # get password from './dbpassword'
 
 ---
 ---
 gcp:
-  db_password: LtJfjdjUZMrKigjnasuSozQCEdSmxpIuTgtnusJFPbHXcqjcyY
+  db_password: IpbXXpOEFNOcFpDQOFglMrFNUhkjUIoxENJxBCERUTUmWYuOvp
 stripe:
   test_publishable_key: pk_test_51PLjRQGNOeNKBTc3wA60vBCW1bdhLVc4Y8wP4NX5E1cXiAh2TNYYgGThPvkcEYakAoOS6VNjFlKEBeweZsRnfQ1E009yKKEh2B
   test_secret_key: sk_test_51PLjRQGNOeNKBTc3eZKbQPlaUWyanXsmwNlHyHkiCUL0AmaG69zx6h2TOOxvXHm6XphlGbQTgr2ML9gzyEmj9mS600VMH0777F 
@@ -238,7 +247,7 @@ sendgrid_mailer:
   api_key_secret: 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
   domain_svc: photo-app-3-svc-cbw4u67gqa-ew.a.run.app
   mail_sender: support@heidless.co.uk
-  domain: heidess.co.uk
+  domain: heidless.co.uk
   auth_token: f6817edca25a334e5e49bf7fb77d8451
   user_login: lockhart.r@gmail.com
   user_sid: USac89b5bfb4ac2f1c924169bae9cf7a22
@@ -251,14 +260,14 @@ secret_key_base: 0d8cb44bdd6a27f074151e3d4b2f489c13fcbf1a4662c04958f7fd615db15a6
 
 ```
 # utils - IF NEEDED
-echo $GCP_SECRET_NAME
+echo SECRET: $GCP_SECRET_NAME
 gcloud secrets delete $GCP_SECRET_NAME
 
 ```
 
 ## create 'secret'
 ```
-echo $GCP_SECRET_NAME
+echo SECRET: $GCP_SECRET_NAME
 echo ' '
 gcloud secrets create $GCP_SECRET_NAME --data-file config/master.key
 
@@ -266,7 +275,7 @@ gcloud secrets create $GCP_SECRET_NAME --data-file config/master.key
 
 ### describe Secret
 ```
-echo $GCP_SECRET_NAME
+echo SECRET: $GCP_SECRET_NAME
 gcloud secrets describe $GCP_SECRET_NAME
 
 gcloud secrets versions access latest --secret $GCP_SECRET_NAME
@@ -280,8 +289,8 @@ gcloud secrets versions access latest --secret $GCP_SECRET_NAME
 
 ```
 # CLOUD COMPUTE access to secrets
-echo $GCP_SECRET_NAME
-echo $GCP_PROJECT_ID
+echo SECRET: $GCP_SECRET_NAME
+echo PROJECT_ID: $GCP_PROJECT_ID
 echo ' '
 
 gcloud secrets add-iam-policy-binding $GCP_SECRET_NAME \
@@ -289,8 +298,8 @@ gcloud secrets add-iam-policy-binding $GCP_SECRET_NAME \
     --role roles/secretmanager.secretAccessor
 
 ## CLOUD BUILD access to secrets
-echo $GCP_SECRET_NAME
-echo $GCP_PROJECT_ID
+echo PROJECT: $GCP_SECRET_NAME
+echo PROJECT_ID: $GCP_PROJECT_ID
 echo ' '
 
 gcloud secrets add-iam-policy-binding $GCP_SECRET_NAME \
@@ -305,10 +314,17 @@ gcloud secrets add-iam-policy-binding $GCP_SECRET_NAME \
 cd PROJECT_ROOT
 touch .env
 ---
+echo PROJECT: $GCP_PROJECT_NAME
+echo PROJECT_ID: $GCP_PROJECT_ID
+echo DB_NAME: $GCP_DB_NAME
+echo DB_USER: $GCP_DB_USER
+echo BUCKET: $GCP_BUCKET_NAME
+echo SENDGRID_API: $GCP_SENDGRID_API_KEY
+echo ' '
 echo "PRODUCTION_DB_NAME: $GCP_DB_NAME" > .env
-echo "PRODUCTION_DB_USERNAME: $GCP_DB_USER" >> .env
+echo "GOOGLE_PROJECT_ID: $GCP_PROJECT_ID" >> .env
 echo "CLOUD_SQL_CONNECTION_NAME: $GCP_PROJECT_NAME:$GCP_REGION:$GCP_INSTANCE" >> .env
-echo "GOOGLE_PROJECT_ID: $GCP_PROJECT_NAME" >> .env
+echo "PRODUCTION_DB_USERNAME: $GCP_DB_USER" >> .env
 echo "STORAGE_BUCKET_NAME: $GCP_BUCKET_NAME" >> .env
 echo "SENDGRID_API_KEY: $GCP_SENDGRID_API_KEY" >> .env
 more .env
@@ -348,7 +364,7 @@ echo $GCP_SERVICE_NAME
 echo $GCP_REGION
 echo $GCP_PROJECT_NAME
 echo $GCP_INSTANCE
-echo $GCP_SECRET_NAME
+echo $GCP_SECRET_NAMEl
 echo ' '
 
 gcloud run deploy $GCP_SERVICE_NAME \

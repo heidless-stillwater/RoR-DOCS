@@ -11,8 +11,8 @@ echo '#######################################################'
 
 ## create Instance
 echo "Creating INSTANCE"
-echo $GCP_INSTANCE
 echo $GCP_PROJECT_NAME
+echo $GCP_INSTANCE
 echo $GCP_DB_VERSION
 echo $GCP_REGION
 echo ' '
@@ -23,8 +23,7 @@ gcloud sql instances create $GCP_INSTANCE \
     --region $GCP_REGION 
 
 
-## set password on 'postgress' user
-
+# set password on 'postgress' user
 echo "set password for POSTGRES user"
 echo $GCP_INSTANCE
 echo ' '
@@ -36,7 +35,6 @@ gcloud sql users set-password postgres \
 ## create DB
 # gcloud sql databases delete $GCP_DB_NAME \
 #    --instance $GCP_INSTANCE
-
 echo 'create DB'
 echo $GCP_DB_NAME
 echo $GCP_INSTANCE
@@ -44,7 +42,7 @@ echo ' '
 gcloud sql databases create $GCP_DB_NAME \
     --instance $GCP_INSTANCE
 
-## USER
+## create USER
 echo 'create USER'
 echo $GCP_DB_USER
 echo $GCP_INSTANCE

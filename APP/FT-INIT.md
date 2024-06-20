@@ -23,6 +23,8 @@ rvm list known
 rvm install 2.6.3 --with-openssl-dir=$HOME/.rvm/usr
 export PATH="/home/heidless/.rvm/gems/ruby-2.6.3/bin:$PATH"
 
+bundle install
+
 
 /bin/zsh --login
 rvm use --default 2.6.3
