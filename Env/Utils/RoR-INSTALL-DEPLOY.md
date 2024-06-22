@@ -93,7 +93,7 @@ gcloud init
 #########
 source ./config/.env-vars
 
-zsh ../../../RoR-DOCS/RoR-CREATE-INSTANCE
+zsh ../../RoR-DOCS/RoR-CREATE-INSTANCE
 
 # initialise Cloud Run - generates servoce account
 Cloud Run->Create Service->Select->Demo Containers->hello
