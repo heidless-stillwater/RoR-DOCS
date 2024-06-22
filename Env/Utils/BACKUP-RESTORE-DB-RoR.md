@@ -21,23 +21,30 @@ echo '######################'
 
 ## set SERVICE ACCOUNT Permissons
 ```
-echo 'SET PERMISSIONS - objectAdmin & legacyBucketWriter'
 --
 # set permissoons on INSTANCE service account
+echo ' '
+echo '#################################'
+echo '#### SET PERMISSIONS - objectAdmin & legacyBucketWriter'
+echo GCP_INSTANCE: ${GCP_INSTANCE}
 export SQL_SVC_ACC=`gcloud sql instances describe ${GCP_INSTANCE} | grep serviceAccountEmailAddress`
-echo $SQL_SVC_ACC
+echo SQL_SVC_ACC: ${SQL_SVC_ACC}
 
 --
-serviceAccountEmailAddress: p32685880208-vg0u6f@gcp-sa-cloud-sql.iam.gserviceaccount.com 
+serviceAccountEmailAddress: p32685880208-kmvcka@gcp-sa-cloud-sql.iam.gserviceaccount.com 
 
 --
 #############################
 # assing Svc Account
-export DB_SVC_ACCOUNT=p32685880208-vg0u6f@gcp-sa-cloud-sql.iam.gserviceaccount.com
+export DB_SVC_ACCOUNT=p32685880208-kmvcka@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 # set PERMISSION on Svc Account
+echo DB_SVC_ACCOUNT: ${DB_SVC_ACCOUNT}
+echo GCP_BUCKET: ${GCP_BUCKET}
+echo ' '
 gsutil iam ch serviceAccount:${DB_SVC_ACCOUNT}:objectAdmin gs://${GCP_BUCKET}
-gsutil iam ch serviceAccount:{DB_SVC_ACCOUNT}:legacyBucketWriter gs://${GCP_BUCKET}
+gsutil iam ch serviceAccount:${DB_SVC_ACCOUNT}:legacyBucketOwner gs://${GCP_BUCKET}
+
 #############################
 
 ```
@@ -50,6 +57,7 @@ source config/.env-vars
 
 cd ./BACKUPS/<BACKUP DIR>
 source ../../config/.env-vars
+
 echo '######################'
 
 #############
@@ -77,10 +85,10 @@ echo " "
 
 echo '######################'
 echo 'BACKUP DB'
-echo $GCP_INSTANCE
-echo $GCP_BUCKET
-echo $GCP_FILE
-echo $GCP_DB_NAME
+echo GCP_INSTANCE: ${GCP_INSTANCE}
+echo GCP_BUCKET: ${GCP_BUCKET}
+echo GCP_FILE: ${GCP_FILE}
+echo GCP_DB_NAME: ${GCP_DB_NAME}
 echo ' '
 gcloud sql export sql ${GCP_INSTANCE} gs://${GCP_BUCKET}/backups/${GCP_FILE}    \
 --database=${GCP_DB_NAME}	 \
@@ -98,6 +106,8 @@ gcloud storage cp gs://${GCP_BUCKET}/backups/${GCP_FILE} .
 
 ##############
 # RE-CREATE DB
+# pq: database "photo-app-0-db-0" is being accessed by other users
+# CLOSE ALL TABS ACCESSING APP
 #
 echo 're-create DB'
 echo $GCP_DB_NAME
@@ -113,11 +123,12 @@ gcloud sql databases create $GCP_DB_NAME \
 ###############
 # UPLOAD BACKUP
 #
-#GCP_FILE=alpha-blog-0-instance-0-alpha-blog-0-db-0-LatestSnapshot-1718973507.gz 
+#GCP_FILE=cat-photo-album-0-instance-0-cat-photo-album-0-db-0-image-test-0-1719061913.gz 
 
-echo GCP_BUCKET_NAME: $GCP_BUCKET_NAME
-echo $GCP_FILE
-gcloud storage cp ${GCP_FILE} gs://${GCP_BUCKET_NAME}/backups/${GCP_FILE}
+echo GCP_BUCKET: ${GCP_BUCKET}
+echo GCP_FILE: ${GCP_FILE}
+gcloud storage cp ${GCP_FILE} gs://${GCP_BUCKET}/backups/${GCP_FILE}
+
 
 ################
 # RESTORE BACKUP
