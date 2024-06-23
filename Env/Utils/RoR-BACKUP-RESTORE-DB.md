@@ -8,6 +8,10 @@
 ```
 gcloud init
 
+https://alpha-blog-0-svc-d57dc7eqba-ew.a.run.app/
+https://alpha-blog-0-svc-d57dc7eqba-nw.a.run.app/
+
+
 
 echo '######################'
 echo 'set ENV'
@@ -123,7 +127,9 @@ gcloud sql databases create $GCP_DB_NAME \
 ###############
 # UPLOAD BACKUP
 #
-#GCP_FILE=cat-photo-album-0-instance-0-cat-photo-album-0-db-0-image-test-0-1719061913.gz 
+source ../../config/.env-vars
+
+GCP_FILE=alpha-blog-0-instance-0-alpha-blog-0-db-0-image-test-0-1719057151.gz
 
 echo GCP_BUCKET: ${GCP_BUCKET}
 echo GCP_FILE: ${GCP_FILE}
@@ -133,6 +139,10 @@ gcloud storage cp ${GCP_FILE} gs://${GCP_BUCKET}/backups/${GCP_FILE}
 ################
 # RESTORE BACKUP
 #
+echo GCP_INSTANCE: ${GCP_INSTANCE}
+echo GCP_BUCKET: ${GCP_BUCKET}
+echo GCP_FILE: ${GCP_FILE}
+echo ' '
 gcloud sql import sql ${GCP_INSTANCE} gs://${GCP_BUCKET}/backups/${GCP_FILE} \
 --database=${GCP_DB_NAME}
 
