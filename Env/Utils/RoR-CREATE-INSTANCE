@@ -1,6 +1,6 @@
 
 echo '#######################################################'
-echo "########## Creating APP ${GCP_APP_NAME}"
+echo "########## Creating APP: ${GCP_APP_NAME}"
 echo '#######################################################'
 
 # echo $GCP_INSTANCE
@@ -11,8 +11,9 @@ echo '#######################################################'
 
 ## create Instance
 echo ' '
-echo "Creating INSTANCE"
+echo 'Creating INSTANCE'
 echo GCP_PROJECT: ${GCP_PROJECT}
+echo GCP_APP_NAME: ${GCP_APP_NAME}
 echo GCP_INSTANCE: ${GCP_INSTANCE}
 echo GCP_DB_VERSION: ${GCP_DB_VERSION}
 echo GCP_REGION: ${GCP_REGION}
@@ -25,7 +26,7 @@ gcloud sql instances create ${GCP_INSTANCE} \
 
 
 # set password on 'postgress' user
-echo "set password for POSTGRES user"
+echo 'set password for POSTGRES user'
 echo ${GCP_INSTANCE}
 echo ' '
 gcloud sql users set-password postgres \

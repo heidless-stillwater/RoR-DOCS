@@ -93,6 +93,13 @@ gcloud init
 #########
 # set env
 
+# fin-track
+/bin/zsh --login
+export PATH="/home/heidless/.rvm/gems/ruby-2.6.3/bin:$PATH"
+rvm use --default 2.6.3
+
+
+# all other apps
 /bin/zsh --login
 export PATH="/home/heidless/.rvm/gems/ruby-3.2.2/bin:$PATH"
 
@@ -100,7 +107,7 @@ rvm use --default 3.2.2
 
 source ./config/.env-vars
 
-zsh ../../RoR-DOCS/RoR-CREATE-INSTANCE
+zsh ../../RoR-DOCS/Env/Utils/RoR-CREATE-INSTANCE
 
 # initialise Cloud Run - generates service account
 Cloud Run->Create Service->Select->Demo Containers->hello
@@ -262,9 +269,9 @@ stripe:
 sendgrid_mailer:
   user_name: apikey
   api_key_secret: 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
-  domain_svc: photo-app-3-svc-cbw4u67gqa-ew.a.run.app
-  mail_sender: support@heidless.co.uk
-  domain: heidless.co.uk
+  domain_svc: photo-app-0-svc-d57dc7eqba-ew.a.run.app
+  mail_sender: support@fundingcloud.co.uk
+  domain: fundingcloud.co.uk
   auth_token: f6817edca25a334e5e49bf7fb77d8451
   user_login: lockhart.r@gmail.com
   user_sid: USac89b5bfb4ac2f1c924169bae9cf7a22
