@@ -68,6 +68,9 @@ SQL_SVC_ACC: serviceAccountEmailAddress: p32685880208-a7kwje@gcp-sa-cloud-sql.ia
 RAILS_PDF_NINJA:
 SQL_SVC_ACC: serviceAccountEmailAddress: p32685880208-qittt6@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
+ACTIVE_STORAGE-TST-2:
+SQL_SVC_ACC: serviceAccountEmailAddress: p32685880208-tpwqyw@gcp-sa-cloud-sql.iam.gserviceaccount.com
+
 --
 #############################
 # assing Svc Account
@@ -94,6 +97,8 @@ export DB_SVC_ACCOUNT=p32685880208-a7kwje@gcp-sa-cloud-sql.iam.gserviceaccount.c
 # RAILS_PDF_NINJA:
 export DB_SVC_ACCOUNT=p32685880208-qittt6@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
+# ACTIVE_STORAGE-TST-2:
+export DB_SVC_ACCOUNT=p32685880208-tpwqyw@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 
 # set PERMISSION on Svc Account
@@ -128,7 +133,7 @@ echo DB: $GCP_DB_NAME
 echo USER: $GCP_DB_USER
 echo BUCKET: $GCP_BUCKET
 
-export BK_COMMENT='--PDF-Upload-Local_storage-'
+export BK_COMMENT='-0-BASE-INSTALL-'
 echo COMMENT: $BK_COMMENT
 
 export BK_TIMESTAMP=`date +%s`
@@ -247,10 +252,12 @@ cd ..
 # local DB backup & install
 ##################################################################################
 
-export BK_DB_NAME=rails_pdf_ninja_0_development
+
+<!-- export BK_DB_NAME=rails_pdf_ninja_0_development -->
+export BK_DB_NAME=active_storage_tst_2_development
 echo BK_DB_NAME: ${BK_DB_NAME}
 
-export BK_COMMENT='-8-PDF-Upload-Local_storage-'
+export BK_COMMENT='-0-BASE-INSTALL-'
 echo BK_COMMENT: ${BK_COMMENT}
 
 export BK_TIMESTAMP=`date +%s`

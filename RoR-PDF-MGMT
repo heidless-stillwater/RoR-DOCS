@@ -106,7 +106,11 @@ gcloud init
 
 --
 
+########################################################
+# Step-by-Step Guide to Setting Up Active Storage Rails
 
+bin/rails active_storage:install
+bin/rails db:migrate
 
 
 
