@@ -1,16 +1,16 @@
-# New Domain
+# New Domain Mapping
 - ## new domain name
   ```
-    westgreenconnection.co.uk
 
   ```
 - ## verify with google
   - ### [verify domain](https://search.google.com/search-console/welcome?sjid=2772788460648112693-EU)
 
-- ## verify with sendgrid
+- ## verify with sendgrid & google
   - ### [Sendgrid: Domain Authentication](https://app.sendgrid.com/settings/sender_auth/domain/create)
+  - ### [Google Authentication](https://search.google.com/search-console/users?resource_id=sc-domain%3Anaught4profit.co.uk)
 
-# [verify domain ownership](https://support.google.com/webmasters/answer/9008080?hl=en&sjid=2772788460648112693-EU)
+  - ## [verify domain ownership](https://support.google.com/webmasters/answer/9008080?hl=en&sjid=2772788460648112693-EU)
 - ### [Add a website property to Search Console](https://support.google.com/webmasters/answer/34592?sjid=2772788460648112693-EU)
   - ### [verify domain](https://search.google.com/search-console/welcome?sjid=2772788460648112693-EU)
   ```
@@ -23,15 +23,11 @@
   - ## [Sendgrid: Sender Authentication](https://app.sendgrid.com/settings/sender_auth)
       - ## [Sendgrid: Domain Authentication](https://app.sendgrid.com/settings/sender_auth/domain/create)
       ```
-        define:
-          main_sender
-          domain
-
+    
       ```
 
-# Configure Custom Domain
+- ## Configure Custom Domain
 ```
-DOMAIN: heidless.com
 
 ```
 - ## Activate Domain for GOOGLE
@@ -39,15 +35,20 @@ DOMAIN: heidless.com
   ```
   # set DEFAULT region/zone
   gcloud config set compute/zone europe-west1-a
+  ```
 
-  Deploy Svc
-
+  - ### Deploy Svc
+  ```
   # set domain mapping
   Cloud Run->Manage Custom Domains->Add Mapping->Add Custom Domain->photo-app-0-svc->Cloud Run Domain Mapping
+
   DNS:
   TXT google-site-verification 54UEwwMf2iW0_uO3kzX_cxTaNEeHdNrqZTOE5mur0gc
 
   ```
+
+- ## [manage domain verification](https://search.google.com/search-console/ownership?resource_id=sc-domain%3Ascrummingit.co.uk)
+
 
 - ### [GUIDE: SENDGRID Domain Authentication](https://www.twilio.com/docs/sendgrid/ui/account-and-settings/how-to-set-up-domain-authentication)
   - ### [app.sendgrid.com](https://app.sendgrid.com/)
@@ -61,18 +62,30 @@ DOMAIN: heidless.com
     
   ```
 
-  - ### [Trace an email with its full headers and Email Log Search](https://knowledge.workspace.google.com/kb/trace-an-email-with-its-full-headers-and-email-log-search-000009352)
+  -- ### [Trace an email with its full headers and Email Log Search](https://knowledge.workspace.google.com/kb/trace-an-email-with-its-full-headers-and-email-log-search-000009352)
   
 
-  - # STRIPE Login
+
+# stripe
+
+  - ## [STRIPE Login](https://dashboard.stripe.com/test/dashboard)
   ```
+  lockhart.r@gmail.com
+  3ym)-hjh:-U&:@*
+
   BACKUP Code: vbck-ruzr-ogah-yslv-skih
 
   Google Authenticator
 
   ```
 
-  # STRIPE TEST Credentials
+  - ## [Guide for basic rails implementation of Stripe checkout](https://docs.stripe.com/testing)
+
+
+  - ## [STRIPE TEST Credit Cards](https://stripe.com/docs/testing)
+
+
+  - ## STRIPE TEST Credentials
   ```
   PUBLISHABLER_KET:
   pk_test_51PLjRQGNOeNKBTc3wA60vBCW1bdhLVc4Y8wP4NX5E1cXiAh2TNYYgGThPvkcEYakAoOS6VNjFlKEBeweZsRnfQ1E009yKKEh2B

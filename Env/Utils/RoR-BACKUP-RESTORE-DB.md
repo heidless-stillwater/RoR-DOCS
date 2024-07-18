@@ -12,6 +12,19 @@ https://alpha-blog-0-svc-d57dc7eqba-ew.a.run.app/
 https://alpha-blog-0-svc-d57dc7eqba-nw.a.run.app/
 
 
+#############################
+#
+# GIT: reinstate 'better_branch' to 'main' branch
+git checkout main
+
+git reset --hard better_branch
+
+git push -f origin main
+
+#############################
+
+
+
 
 echo '######################'
 echo 'set ENV'
@@ -44,7 +57,16 @@ CAT-PHOTO:
 serviceAccountEmailAddress: p32685880208-8vpfud@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 PHOTO-APP:
-SQL_SVC_ACC: serviceAccountEmailAddress: p32685880208-r6z4xq@gcp-sa-cloud-sql.iam.gserviceaccount.com
+SQL_SVC_ACC: serviceAccountEmailAddress: p32685880208-vwwn2v@gcp-sa-cloud-sql.iam.gserviceaccount.com
+
+RAILS-V6-1-7-BASE:
+SQL_SVC_ACC: serviceAccountEmailAddress: p32685880208-pypko4@gcp-sa-cloud-sql.iam.gserviceaccount.com
+
+RAILS_TEST_DEPLOY:
+SQL_SVC_ACC: serviceAccountEmailAddress: p32685880208-a7kwje@gcp-sa-cloud-sql.iam.gserviceaccount.com
+
+RAILS_PDF_NINJA:
+SQL_SVC_ACC: serviceAccountEmailAddress: p32685880208-qittt6@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 --
 #############################
@@ -58,10 +80,20 @@ export DB_SVC_ACCOUNT=p32685880208-q2qf3l@gcp-sa-cloud-sql.iam.gserviceaccount.c
 export DB_SVC_ACCOUNT=p32685880208-bompfm@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 # photo-app
-export DB_SVC_ACCOUNT=p32685880208-r6z4xq@gcp-sa-cloud-sql.iam.gserviceaccount.com
+export DB_SVC_ACCOUNT=p32685880208-vwwn2v@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 # cat-photo
 export DB_SVC_ACCOUNT=p32685880208-8vpfud@gcp-sa-cloud-sql.iam.gserviceaccount.com
+
+# RAILS-V6-1-7-BASE:
+export DB_SVC_ACCOUNT=p32685880208-pypko4@gcp-sa-cloud-sql.iam.gserviceaccount.com
+
+# RAILS_TEST_DEPLOY:
+export DB_SVC_ACCOUNT=p32685880208-a7kwje@gcp-sa-cloud-sql.iam.gserviceaccount.com
+
+# RAILS_PDF_NINJA:
+export DB_SVC_ACCOUNT=p32685880208-qittt6@gcp-sa-cloud-sql.iam.gserviceaccount.com
+
 
 
 # set PERMISSION on Svc Account
@@ -73,11 +105,12 @@ echo 'objectAdmin'
 gsutil iam ch serviceAccount:${DB_SVC_ACCOUNT}:objectAdmin gs://${GCP_BUCKET}
 echo gsutil iam ch serviceAccount:${DB_SVC_ACCOUNT}:objectAdmin gs://${GCP_BUCKET}
 
+<!-- 
 echo ' '
 echo 'legacyBucketOwner'
 echo gsutil iam ch serviceAccount:${DB_SVC_ACCOUNT}:legacyBucketOwner gs://${GCP_BUCKET}
 gsutil iam ch serviceAccount:${DB_SVC_ACCOUNT}:legacyBucketOwner gs://${GCP_BUCKET}
-
+ -->
 
 ```
 
@@ -95,13 +128,13 @@ echo DB: $GCP_DB_NAME
 echo USER: $GCP_DB_USER
 echo BUCKET: $GCP_BUCKET
 
-export BK_COMMENT='000-successful-deploy-000'
+export BK_COMMENT='--PDF-Upload-Local_storage-'
 echo COMMENT: $BK_COMMENT
 
 export BK_TIMESTAMP=`date +%s`
 echo TIMESTAMP: $BK_TIMESTAMP
 
-export GCP_FILE=${GCP_INSTANCE}-${GCP_DB_NAME}-${BK_COMMENT}-${BK_TIMESTAMP}.gz
+export GCP_FILE=${GCP_DB_NAME}-${BK_COMMENT}-${BK_TIMESTAMP}.gz
 echo FILE: ${GCP_FILE}
 
 echo ' '
@@ -148,7 +181,8 @@ gcloud sql databases create $GCP_DB_NAME \
 #
 source ../../config/.env-vars
 
-#GCP_FILE=photo-app-0-instance-0-photo-app-0-db-0-pre-active-record-1719473099.gz
+GCP_FILE=rails-pdf-ninja-0-db-0--1-LOCAL-IMAGE-UPLOAD--1720977593.gz
+
 
 echo GCP_BUCKET: ${GCP_BUCKET}
 echo GCP_FILE: ${GCP_FILE}
@@ -179,7 +213,6 @@ gsutil cp -r ${GCP_MEDIA_DIR} .
 cd <BACKUP DIR>
 cd images
 
-
 echo GCP_LOCAL_ICONS: $GCP_LOCAL_ICONS
 echo GCP_LOCAL_INAGE: $GCP_LOCAL_INAGE
 
@@ -198,12 +231,7 @@ gsutil -m cp -r \
   "gs://heidless-pfolio-3-bucket/images" \
   .
 
-
-
 gsutil cp -r ${GCP_LOCAL_ICONS} ${GCP_ICON_DIR}
-
-
-
 
 cd ..
 
@@ -214,8 +242,52 @@ cd ..
 
 
 
-#########################################
-### IMAGE/FILE Backup
+##################################################################################
+##################################################################################
+# local DB backup & install
+##################################################################################
+
+export BK_DB_NAME=rails_pdf_ninja_0_development
+echo BK_DB_NAME: ${BK_DB_NAME}
+
+export BK_COMMENT='-8-PDF-Upload-Local_storage-'
+echo BK_COMMENT: ${BK_COMMENT}
+
+export BK_TIMESTAMP=`date +%s`
+echo TIMESTAMP: ${BK_TIMESTAMP}
+
+export BK_FILE=${BK_DB_NAME}-${BK_COMMENT}-${BK_TIMESTAMP}.pgsql
+echo BK_FILE: ${BK_FILE}
+
+echo ' '
+
+# dump local DB
+pg_dump -U heidless ${BK_DB_NAME} > ${BK_FILE}
+
+
+
+###################################
+# reset DB
+psql
+--
+DROP DATABASE rails_pdf_ninja_0_development;
+DROP DATABASE rails_pdf_ninja_0_test;
+
+--
+
+rails db:create
+
+###################################
+# import backup
+export BK_FILE=rails_pdf_ninja_0_development--8-PDF-Upload-Local_storage--1721159231.pgsql
+echo BK_FILE: ${BK_FILE}
+
+psql -U heidless ${BK_DB_NAME} < ${BK_FILE}
+
+--
+
+
+
 
 
 

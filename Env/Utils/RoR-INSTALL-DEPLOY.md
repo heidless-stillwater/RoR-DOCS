@@ -99,10 +99,17 @@ export PATH="/home/heidless/.rvm/gems/ruby-2.6.3/bin:$PATH"
 rvm use --default 2.6.3
 
 
+/bin/zsh --login
+export PATH="/home/heidless/.rvm/gems/ruby-3.3.2/bin:$PATH"
+rvm use --default 3.3.2
+
+/bin/zsh --login
+export PATH="/home/heidless/.rvm/gems/ruby-3.3.3/bin:$PATH"
+rvm use --default 3.3.3
+
 # all other apps
 /bin/zsh --login
 export PATH="/home/heidless/.rvm/gems/ruby-3.2.2/bin:$PATH"
-
 rvm use --default 3.2.2
 
 source ./config/.env-vars
@@ -202,11 +209,6 @@ echo $bucket_path
 
 gsutil mb -l ${GCP_REGION} ${bucket_path}
 
-# create backup dir
-#TEST_FILE
-#gcloud storage cp your-file gs://your-bucket/abc/
-
-
 ```
 
 ### [bucket permissions]()
@@ -237,12 +239,6 @@ sudo apt-get install sublime-text
 
 ```
 
-# make sure to delete previous config/credentials.yml.enc
-rm config/credentials.yml.enc config/master.key
----
-# password value in file config/credentials.yml.enc
-EDITOR='subl --wait' ./bin/rails credentials:edit
-
 # IF WONT START:
 #   - remove Gemfile.lock
 #   - bundle install
@@ -251,15 +247,65 @@ EDITOR='subl --wait' ./bin/rails credentials:edit
 # get password from './dbpassword'
 
 ---
----
+--
 ALPHA_BLOG_PWD: zfpKxOEhNmNwMmZlaGXsbhDQtAWbTSjwRJWUgGGQwBoLYszrMT
 FIN_TRACK_PWD: VFHuZyCAfafqNfxqvLszQwHWraHYqBBNdICIZcBZGzWWNpouIH
 CAT_PHOTO_PWD: IpbXXpOEFNOcFpDQOFglMrFNUhkjUIoxENJxBCERUTUmWYuOvp
+
 PHOTO_APP_PWD: LtJfjdjUZMrKigjnasuSozQCEdSmxpIuTgtnusJFPbHXcqjcyY
+PHOTO_APP_DOMAIN: fundingcloud.co.uk
+PHOTO_APP_API:
+--
+  user_name: apikey
+  api_key_secret: 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
+
 --
 
+SAAS_APP_PWD: CAfYgPFFHaKBjszefpkSMrVmQZRJVNBoEEHslUZIuMKYviOovw
+
+RAILS-V6-1-7-BASE-PWD: seGgomNdejNgIUIdtxRwQVEslQnsrHropJNQZLgGxlSlRJXaxb
+RAILS-V6-1-7-BASE-DOMAIN: naught4profit.co.uk
+RAILS-V6-1-7-BASE-API:
+--
+    apikey_rails_v6
+    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
+
+    apikey-test-1
+    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
+
+--
+
+
+RAILS-TEST-DEPLOY-PWD: wVICYjmSfrnrZzeyHbCxImRpavdjyqBirvJusLqcbgDhBscugY
+RAILS-TEST-DEPLOY-DOMAIN: lockhartarts.com
+
+RAILS-PDF-NINJA-PWD: RZkdECZnICBPqPSbDhlGYRboqJNxCRIQKWXfzkMqGaIxzoYAax
+RAILS-PDF-NINJA-DOMAIN: fundingcloud.com
+
+S3_BUCKET: heidless-pdf-ninja
+S3_BUCKET: heidless-photoappimages
+
+ACTIVE-STORAGE-TST-PWD: wYTStfqZIHJzOrqbqYvxeRwTGHtSBIZnVIyEhuCItahZbmyLcZ
+ACTIVE-STORAGE-TST-DOMAIN: ????
+
+ACTIVE-STORAGE-TST-2-PWD: sERSjGXFpFPGoORaNHZlwybhfceRfkFBXOLuRlTXumpdDHykdB
+ACTIVE-STORAGE-TST-2-DOMAIN: ????
+
+# make sure to delete previous config/credentials.yml.enc
+rm config/credentials.yml.enc config/master.key
+
+---
+# password value in file config/credentials.yml.enc
+EDITOR='subl --wait' ./bin/rails credentials:edit
+
+
 gcp:
-  db_password: LtJfjdjUZMrKigjnasuSozQCEdSmxpIuTgtnusJFPbHXcqjcyY
+  db_password: sERSjGXFpFPGoORaNHZlwybhfceRfkFBXOLuRlTXumpdDHykdB
+aws_credentials:
+    S3_ACCESS_KEY: AKIAYUPGERUW63AOF5TE
+    S3_SECRET_KEY: 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
+    S3_BUCKET: heidless-photoappimages
+    AWS_REGION: eu-west-2
 iex_client:
   api_key: pk_808439936a93476fb7558256a9b6da5c
   secret_api_key: sk_7de5c9cf9cb74ec3ad57523bc62cc986
@@ -268,10 +314,10 @@ stripe:
   test_secret_key: sk_test_51PLjRQGNOeNKBTc3eZKbQPlaUWyanXsmwNlHyHkiCUL0AmaG69zx6h2TOOxvXHm6XphlGbQTgr2ML9gzyEmj9mS600VMH0777F 
 sendgrid_mailer:
   user_name: apikey
-  api_key_secret: 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
+  api_key_secret: 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
   domain_svc: photo-app-0-svc-d57dc7eqba-ew.a.run.app
-  mail_sender: support@fundingcloud.co.uk
-  domain: fundingcloud.co.uk
+  mail_sender: support@fundingcloud.com
+  domain: fundingcloud.com
   auth_token: f6817edca25a334e5e49bf7fb77d8451
   user_login: lockhart.r@gmail.com
   user_sid: USac89b5bfb4ac2f1c924169bae9cf7a22
@@ -376,6 +422,12 @@ gcloud projects add-iam-policy-binding $GCP_PROJECT \
 ```
 
 ```
+/bin/zsh --login
+export PATH="/home/heidless/.rvm/gems/ruby-3.3.2/bin:$PATH"
+rvm use --default 3.3.
+
+
+```
 echo $GCP_SERVICE_NAME
 echo $GCP_INSTANCE
 echo $GCP_REGION
@@ -384,6 +436,7 @@ echo ' '
 
 gcloud builds submit --config cloudbuild.yaml \
     --substitutions _SERVICE_NAME=$GCP_SERVICE_NAME,_INSTANCE_NAME=$GCP_INSTANCE,_REGION=$GCP_REGION,_SECRET_NAME=$GCP_SECRET_NAME 
+
 
 ---
 echo GCP_SERVICE_NAME: $GCP_SERVICE_NAME
@@ -439,5 +492,59 @@ gcloud beta run domain-mappings create --service ${GCP_SERVICE_NAME} --domain ${
 # kill & restart - IF address already in use
 #sudo lsof -i -P -n | grep LISTEN
 #kill -9 <PID>
+
+
+
+
+```
+rails s     # fails with webpack issues
+
+bundle exec rails webpacker:install     # then retry
+
+npm install --save-dev @babel/plugin-transform-private-methods
+npm install --save-dev @babel/core@^7.0.0-0
+npm install --save-dev @babel/plugin-proposal-private-methods
+
+npm i fsevents@2.2.1
+
+
+    create_table :articles do |t|
+      t.text :title
+      t.text :description
+      t.timestamps
+
+rails generate scaffold Article title:text description:text user:references
+rails g bootstrap:themed Articles
+article = Article.new(title: "third article", description: "description of third article", user_id: 1)
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              articles_path, :class => 'btn btn-default'  %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_article_path(@article), :class => 'btn btn-default' %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              article_path(@article),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+
+
+rails generate scaffold Image name:string picture:string user:references
+
+
+rails generate scaffold Pdf name:string description:string pdfdoc:string user:references
+
+rails db:migrate
+
+rails g bootstrap:themed Pdfs
+
+user.rb
+--
+has_many :pdfs
+
+--
+
+rails generate uploader Pdfdoc
+
+
 
 
