@@ -253,7 +253,7 @@ cd ..
 ##################################################################################
 
 
-<!-- export BK_DB_NAME=rails_pdf_ninja_0_development -->
+<!-- export BK_DB_NAME=rails_pdf_ninja_0_development -->q
 export BK_DB_NAME=active_storage_tst_2_development
 echo BK_DB_NAME: ${BK_DB_NAME}
 
@@ -286,7 +286,11 @@ rails db:create
 
 ###################################
 # import backup
-export BK_FILE=rails_pdf_ninja_0_development--8-PDF-Upload-Local_storage--1721159231.pgsql
+export BK_DB_NAME=rails_pdf_ninja_0_development
+<!-- export BK_DB_NAME=active_storage_tst_2_development -->
+
+export BK_FILE=rails_pdf_ninja_0_development--8-PDF-Image-Upload-Local-Storage--1721295085.pgsql
+echo BK_DB_NAME: ${BK_DB_NAME}
 echo BK_FILE: ${BK_FILE}
 
 psql -U heidless ${BK_DB_NAME} < ${BK_FILE}
