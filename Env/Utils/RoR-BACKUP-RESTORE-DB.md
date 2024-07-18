@@ -290,8 +290,11 @@ export BK_DB_NAME=rails_pdf_ninja_0_development
 <!-- export BK_DB_NAME=active_storage_tst_2_development -->
 
 export BK_FILE=rails_pdf_ninja_0_development--8-PDF-Image-Upload-Local-Storage--1721295085.pgsql
+
+echo ' '
 echo BK_DB_NAME: ${BK_DB_NAME}
 echo BK_FILE: ${BK_FILE}
+echo ' '
 
 psql -U heidless ${BK_DB_NAME} < ${BK_FILE}
 
