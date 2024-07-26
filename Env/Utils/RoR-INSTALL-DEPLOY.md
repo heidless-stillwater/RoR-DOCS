@@ -106,6 +106,8 @@ rvm use --default 3.3.2
 /bin/zsh --login
 export PATH="/home/heidless/.rvm/gems/ruby-3.3.3/bin:$PATH"
 rvm use --default 3.3.3
+  
+gcloud init
 
 # all other apps
 /bin/zsh --login
@@ -117,10 +119,10 @@ source ./config/.env-vars
 zsh ../../RoR-DOCS/Env/Utils/RoR-CREATE-INSTANCE
 
 # initialise Cloud Run - generates service account
-Cloud Run->Create Service->Select->Demo Containers->hello
+#Cloud Run->Create Service->Select->Demo Containers->hello
 
 # initialise Cloud Buld - generates service account
-Cloud Buld->Enable API
+#Cloud Buld->Enable API
 
 #########
 
@@ -248,9 +250,20 @@ sudo apt-get install sublime-text
 
 ---
 --
-ALPHA_BLOG_PWD: zfpKxOEhNmNwMmZlaGXsbhDQtAWbTSjwRJWUgGGQwBoLYszrMT
-FIN_TRACK_PWD: VFHuZyCAfafqNfxqvLszQwHWraHYqBBNdICIZcBZGzWWNpouIH
-CAT_PHOTO_PWD: IpbXXpOEFNOcFpDQOFglMrFNUhkjUIoxENJxBCERUTUmWYuOvp
+
+SAAS_APP_PWD: CAfYgPFFHaKBjszefpkSMrVmQZRJVNBoEEHslUZIuMKYviOovw
+
+RAILS-TEST-DEPLOY-PWD: wVICYjmSfrnrZzeyHbCxImRpavdjyqBirvJusLqcbgDhBscugY
+RAILS-TEST-DEPLOY-DOMAIN: lockhartarts.com
+
+S3_BUCKET: heidless-pdf-ninja
+S3_BUCKET: heidless-photoappimages
+
+ACTIVE-STORAGE-TST-PWD: wYTStfqZIHJzOrqbqYvxeRwTGHtSBIZnVIyEhuCItahZbmyLcZ
+ACTIVE-STORAGE-TST-DOMAIN: ????
+
+ACTIVE-STORAGE-TST-2-PWD: sERSjGXFpFPGoORaNHZlwybhfceRfkFBXOLuRlTXumpdDHykdB
+ACTIVE-STORAGE-TST-2-DOMAIN: ????
 
 PHOTO_APP_PWD: LtJfjdjUZMrKigjnasuSozQCEdSmxpIuTgtnusJFPbHXcqjcyY
 PHOTO_APP_DOMAIN: fundingcloud.co.uk
@@ -261,7 +274,17 @@ PHOTO_APP_API:
 
 --
 
-SAAS_APP_PWD: CAfYgPFFHaKBjszefpkSMrVmQZRJVNBoEEHslUZIuMKYviOovw
+ALPHA_BLOG_PWD: zfpKxOEhNmNwMmZlaGXsbhDQtAWbTSjwRJWUgGGQwBoLYszrMT
+ALPHA_BLOG_DOMAIN: heidless.co.uk
+
+FIN_TRACK_PWD: VFHuZyCAfafqNfxqvLszQwHWraHYqBBNdICIZcBZGzWWNpouIH
+FIN_TRACK_DOMAIN: heidless.co.uk
+
+CAT_PHOTO_PWD: IpbXXpOEFNOcFpDQOFglMrFNUhkjUIoxENJxBCERUTUmWYuOvp
+CAT_PHOTO_DOMAIN: heidless.co.uk
+
+RAILS-PDF-NINJA-PWD: RZkdECZnICBPqPSbDhlGYRboqJNxCRIQKWXfzkMqGaIxzoYAax
+RAILS-PDF-NINJA-DOMAIN: fundingcloud.com
 
 RAILS-V6-1-7-BASE-PWD: seGgomNdejNgIUIdtxRwQVEslQnsrHropJNQZLgGxlSlRJXaxb
 RAILS-V6-1-7-BASE-DOMAIN: naught4profit.co.uk
@@ -275,22 +298,6 @@ RAILS-V6-1-7-BASE-API:
 
 --
 
-
-RAILS-TEST-DEPLOY-PWD: wVICYjmSfrnrZzeyHbCxImRpavdjyqBirvJusLqcbgDhBscugY
-RAILS-TEST-DEPLOY-DOMAIN: lockhartarts.com
-
-RAILS-PDF-NINJA-PWD: RZkdECZnICBPqPSbDhlGYRboqJNxCRIQKWXfzkMqGaIxzoYAax
-RAILS-PDF-NINJA-DOMAIN: fundingcloud.com
-
-S3_BUCKET: heidless-pdf-ninja
-S3_BUCKET: heidless-photoappimages
-
-ACTIVE-STORAGE-TST-PWD: wYTStfqZIHJzOrqbqYvxeRwTGHtSBIZnVIyEhuCItahZbmyLcZ
-ACTIVE-STORAGE-TST-DOMAIN: ????
-
-ACTIVE-STORAGE-TST-2-PWD: sERSjGXFpFPGoORaNHZlwybhfceRfkFBXOLuRlTXumpdDHykdB
-ACTIVE-STORAGE-TST-2-DOMAIN: ????
-
 # make sure to delete previous config/credentials.yml.enc
 rm config/credentials.yml.enc config/master.key
 
@@ -300,12 +307,12 @@ EDITOR='subl --wait' ./bin/rails credentials:edit
 
 
 gcp:
-  db_password: sERSjGXFpFPGoORaNHZlwybhfceRfkFBXOLuRlTXumpdDHykdB
+  db_password: IpbXXpOEFNOcFpDQOFglMrFNUhkjUIoxENJxBCERUTUmWYuOvp
 aws_credentials:
     S3_ACCESS_KEY: AKIAYUPGERUW63AOF5TE
     S3_SECRET_KEY: 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
     S3_BUCKET: heidless-photoappimages
-    AWS_REGION: eu-west-2
+    AWS_REGION: eu-west-2   
 iex_client:
   api_key: pk_808439936a93476fb7558256a9b6da5c
   secret_api_key: sk_7de5c9cf9cb74ec3ad57523bc62cc986
@@ -316,8 +323,8 @@ sendgrid_mailer:
   user_name: apikey
   api_key_secret: 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
   domain_svc: photo-app-0-svc-d57dc7eqba-ew.a.run.app
-  mail_sender: support@fundingcloud.com
-  domain: fundingcloud.com
+  mail_sender: support@heidless.co.uk
+  domain: heidless.co.uk
   auth_token: f6817edca25a334e5e49bf7fb77d8451
   user_login: lockhart.r@gmail.com
   user_sid: USac89b5bfb4ac2f1c924169bae9cf7a22
@@ -369,13 +376,13 @@ gcloud secrets add-iam-policy-binding $GCP_SECRET_NAME \
     --role roles/secretmanager.secretAccessor
 
 ## CLOUD BUILD access to secrets
-echo PROJECT: $GCP_SECRET_NAME
-echo PROJECT_ID: $GCP_PROJECT_ID
-echo ' '
+#echo PROJECT: $GCP_SECRET_NAME
+#echo PROJECT_ID: $GCP_PROJECT_ID
+#echo ' '
 
-gcloud secrets add-iam-policy-binding $GCP_SECRET_NAME \
-    --member serviceAccount:$GCP_PROJECT_ID@cloudbuild.gserviceaccount.com \
-    --role roles/secretmanager.secretAccessor
+#gcloud secrets add-iam-policy-binding $GCP_SECRET_NAME \
+#    --member serviceAccount:$GCP_PROJECT_ID@cloudbuild.gserviceaccount.com \
+#    --role roles/secretmanager.secretAccessor
 
 ```
 
@@ -404,14 +411,14 @@ more .env
 
 ### Grant Cloud Build access to Cloud SQL
 ```
-echo GCP_SECRET_NAME: $GCP_SECRET_NAME
-echo GCP_PROJECT: $GCP_PROJECT
-echo GCP_PROJECT_ID: $GCP_PROJECT_ID
-echo ' '
+#echo GCP_SECRET_NAME: $GCP_SECRET_NAME
+#echo GCP_PROJECT: $GCP_PROJECT
+#echo GCP_PROJECT_ID: $GCP_PROJECT_ID
+#echo ' '
 
-gcloud projects add-iam-policy-binding $GCP_PROJECT \
-    --member serviceAccount:$GCP_PROJECT_ID@cloudbuild.gserviceaccount.com \
-    --role roles/cloudsql.client
+#gcloud projects add-iam-policy-binding $GCP_PROJECT \
+#    --member serviceAccount:$GCP_PROJECT_ID@cloudbuild.gserviceaccount.com \
+#    --role roles/cloudsql.client
 
 ```
 

@@ -48,7 +48,7 @@ echo SQL_SVC_ACC: ${SQL_SVC_ACC}
 
 --
 ALPHA-BLOG:
-serviceAccountEmailAddress: p32685880208-bompfm@gcp-sa-cloud-sql.iam.gserviceaccount.com
+serviceAccountEmailAddress: p84348039033-ept8q1@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 FIN-TRACK:
 serviceAccountEmailAddress: p32685880208-q2qf3l@gcp-sa-cloud-sql.iam.gserviceaccount.com
@@ -57,16 +57,16 @@ CAT-PHOTO:
 serviceAccountEmailAddress: p32685880208-8vpfud@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 PHOTO-APP:
-SQL_SVC_ACC: serviceAccountEmailAddress: p32685880208-vwwn2v@gcp-sa-cloud-sql.iam.gserviceaccount.com
+SQL_SVC_ACC: serviceAccountEmailAddress: p84348039033-9350xd@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 RAILS-V6-1-7-BASE:
-SQL_SVC_ACC: serviceAccountEmailAddress: p32685880208-pypko4@gcp-sa-cloud-sql.iam.gserviceaccount.com
+SQL_SVC_ACC: serviceAccountEmailAddress: p84348039033-fc24g7@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 RAILS_TEST_DEPLOY:
 SQL_SVC_ACC: serviceAccountEmailAddress: p32685880208-a7kwje@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 RAILS_PDF_NINJA:
-SQL_SVC_ACC: serviceAccountEmailAddress: p32685880208-qittt6@gcp-sa-cloud-sql.iam.gserviceaccount.com
+SQL_SVC_ACC: serviceAccountEmailAddress: p84348039033-r28f9i@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 ACTIVE_STORAGE-TST-2:
 SQL_SVC_ACC: serviceAccountEmailAddress: p32685880208-tpwqyw@gcp-sa-cloud-sql.iam.gserviceaccount.com
@@ -77,25 +77,26 @@ SQL_SVC_ACC: serviceAccountEmailAddress: p32685880208-tpwqyw@gcp-sa-cloud-sql.ia
 #export DB_SVC_ACCOUNT=backups-svc-account@heidless-ror-5.iam.gserviceaccount.com
 
 # fin-track
-export DB_SVC_ACCOUNT=p32685880208-q2qf3l@gcp-sa-cloud-sql.iam.gserviceaccount.com
+export DB_SVC_ACCOUNT=p84348039033-szuu0p@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 # alpha-blog
-export DB_SVC_ACCOUNT=p32685880208-bompfm@gcp-sa-cloud-sql.iam.gserviceaccount.com
+export DB_SVC_ACCOUNT=p84348039033-ept8q1@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 # photo-app
-export DB_SVC_ACCOUNT=p32685880208-vwwn2v@gcp-sa-cloud-sql.iam.gserviceaccount.com
+export DB_SVC_ACCOUNT=p84348039033-9350xd@gcp-sa-cloud-sql.iam.gserviceaccount.com
+echo ${DB_SVC_ACCOUNT}
 
 # cat-photo
 export DB_SVC_ACCOUNT=p32685880208-8vpfud@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 # RAILS-V6-1-7-BASE:
-export DB_SVC_ACCOUNT=p32685880208-pypko4@gcp-sa-cloud-sql.iam.gserviceaccount.com
+export DB_SVC_ACCOUNT=p84348039033-fc24g7@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 # RAILS_TEST_DEPLOY:
 export DB_SVC_ACCOUNT=p32685880208-a7kwje@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 # RAILS_PDF_NINJA:
-export DB_SVC_ACCOUNT=p32685880208-qittt6@gcp-sa-cloud-sql.iam.gserviceaccount.com
+export DB_SVC_ACCOUNT=p84348039033-r28f9i@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 # ACTIVE_STORAGE-TST-2:
 export DB_SVC_ACCOUNT=p32685880208-tpwqyw@gcp-sa-cloud-sql.iam.gserviceaccount.com
@@ -133,7 +134,7 @@ echo DB: $GCP_DB_NAME
 echo USER: $GCP_DB_USER
 echo BUCKET: $GCP_BUCKET
 
-export BK_COMMENT='-0-BASE-INSTALL-'
+export BK_COMMENT='-9-ACTIVE-STORAGE-0-'
 echo COMMENT: $BK_COMMENT
 
 export BK_TIMESTAMP=`date +%s`
@@ -151,6 +152,7 @@ echo GCP_BUCKET: ${GCP_BUCKET}
 echo GCP_FILE: ${GCP_FILE}
 echo GCP_DB_NAME: ${GCP_DB_NAME}
 echo ' '
+
 gcloud sql export sql ${GCP_INSTANCE} gs://${GCP_BUCKET}/backups/${GCP_FILE}    \
 --database=${GCP_DB_NAME}	 \
 --offload
@@ -163,6 +165,18 @@ gcloud sql export sql ${GCP_INSTANCE} gs://${GCP_BUCKET}/backups/${GCP_FILE}    
 echo GCP_BUCKET: $GCP_BUCKET
 echo GCP_FILE: $GCP_FILE
 gcloud storage cp gs://${GCP_BUCKET}/backups/${GCP_FILE} .
+
+
+###############
+# UPLOAD BACKUP
+#
+source ../../config/.env-vars
+
+GCP_FILE=fin-track-0-instance-0-fin-track-0-db-0-upload-inage-test-0-1719253838.gz
+
+echo GCP_BUCKET: ${GCP_BUCKET}
+echo GCP_FILE: ${GCP_FILE}
+gcloud storage cp ${GCP_FILE} gs://${GCP_BUCKET}/backups/${GCP_FILE}
 
 
 ##############
@@ -179,19 +193,6 @@ gcloud sql databases delete $GCP_DB_NAME \
 
 gcloud sql databases create $GCP_DB_NAME \
     --instance $GCP_INSTANCE
-
-
-###############
-# UPLOAD BACKUP
-#
-source ../../config/.env-vars
-
-GCP_FILE=rails-pdf-ninja-0-db-0--1-LOCAL-IMAGE-UPLOAD--1720977593.gz
-
-
-echo GCP_BUCKET: ${GCP_BUCKET}
-echo GCP_FILE: ${GCP_FILE}
-gcloud storage cp ${GCP_FILE} gs://${GCP_BUCKET}/backups/${GCP_FILE}
 
 
 ################
