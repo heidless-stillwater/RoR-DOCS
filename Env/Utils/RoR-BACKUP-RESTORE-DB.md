@@ -71,6 +71,10 @@ SQL_SVC_ACC: serviceAccountEmailAddress: p84348039033-r28f9i@gcp-sa-cloud-sql.ia
 ACTIVE_STORAGE-TST-2:
 SQL_SVC_ACC: serviceAccountEmailAddress: p32685880208-tpwqyw@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
+BULLET_TRAIN:
+SQL_SVC_ACC: serviceAccountEmailAddress: p84348039033-4sab4e@gcp-sa-cloud-sql.iam.gserviceaccount.com
+
+
 --
 #############################
 # assing Svc Account
@@ -100,6 +104,9 @@ export DB_SVC_ACCOUNT=p84348039033-r28f9i@gcp-sa-cloud-sql.iam.gserviceaccount.c
 
 # ACTIVE_STORAGE-TST-2:
 export DB_SVC_ACCOUNT=p32685880208-tpwqyw@gcp-sa-cloud-sql.iam.gserviceaccount.com
+
+# BULLET_TRAIN:
+export DB_SVC_ACCOUNT=p84348039033-4sab4e@gcp-sa-cloud-sql.iam.gserviceaccount.com
 
 
 # set PERMISSION on Svc Account
@@ -134,7 +141,7 @@ echo DB: $GCP_DB_NAME
 echo USER: $GCP_DB_USER
 echo BUCKET: $GCP_BUCKET
 
-export BK_COMMENT='-9-ACTIVE-STORAGE-0-'
+export BK_COMMENT='-0-BASE-INSTALL-'
 echo COMMENT: $BK_COMMENT
 
 export BK_TIMESTAMP=`date +%s`
@@ -159,7 +166,7 @@ gcloud sql export sql ${GCP_INSTANCE} gs://${GCP_BUCKET}/backups/${GCP_FILE}    
 
 
 #################
-# DOWNLOAD BACKUP
+# DOWNLOAD BACKUPls
 # cd <BACKUP DIR>
 
 echo GCP_BUCKET: $GCP_BUCKET

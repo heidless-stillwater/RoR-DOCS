@@ -100,6 +100,10 @@ rvm use --default 2.6.3
 
 
 /bin/zsh --login
+export PATH="/home/heidless/.rvm/gems/ruby-3.2.2/bin:$PATH"
+rvm use --default 3.2.2
+
+/bin/zsh --login
 export PATH="/home/heidless/.rvm/gems/ruby-3.3.2/bin:$PATH"
 rvm use --default 3.3.2
 
@@ -107,16 +111,19 @@ rvm use --default 3.3.2
 export PATH="/home/heidless/.rvm/gems/ruby-3.3.3/bin:$PATH"
 rvm use --default 3.3.3
   
-gcloud init
 
 # all other apps
 /bin/zsh --login
-export PATH="/home/heidless/.rvm/gems/ruby-3.2.2/bin:$PATH"
-rvm use --default 3.2.2
+export PATH="/home/heidless/.rvm/gems/ruby-3.3.4/bin:$PATH"
+rvm use --default 3.3.4
 
 source ./config/.env-vars
 
-zsh ../../RoR-DOCS/Env/Utils/RoR-CREATE-INSTANCE
+gcloud init
+
+create_instance_dir='../../../RoR-DOCS/Env/Utils/RoR-CREATE-INSTANCE'
+ls ${create_instance_dir}
+zsh ${create_instance_dir}
 
 # initialise Cloud Run - generates service account
 #Cloud Run->Create Service->Select->Demo Containers->hello
@@ -298,21 +305,39 @@ RAILS-V6-1-7-BASE-API:
 
 --
 
+BULLET-TRAIN-TEST-0:  qMMCnXvLNwmluQyeSCYoPeXpPwDnVcuSZaqzgXQHQddHubFeXm
+
+RAILS-7-TEST-0:  uAEEewUNkOojDVRHYVFWbEVPFJfecnhiciBgaHOKZvRTiqEiGK
+
+rails-pdf-test-0-instance-0:  uAEEewUNkOojDVRHYVFWbEVPFJfecnhiciBgaHOKZvRTiqEiGK
+
+rails-7-trial-0-instance-0: kEPZSUMoRGdstKuMLkIVWKzMGeNtSPIBdeZDNNFHoOMXFfcJDZ
+
+bullet-test-0-instance-0: qMMCnXvLNwmluQyeSCYoPeXpPwDnVcuSZaqzgXQHQddHubFeXm
+
+bullet-test-1-instance-0: qMMCnXvLNwmluQyeSCYoPeXpPwDnVcuSZaqzgXQHQddHubFeXm
+
+bullet-train-0-instance-0: qMMCnXvLNwmluQyeSCYoPeXpPwDnVcuSZaqzgXQHQddHubFeXm
+
 # make sure to delete previous config/credentials.yml.enc
 rm config/credentials.yml.enc config/master.key
 
 ---
 # password value in file config/credentials.yml.enc
+#EDITOR='subl --wait' ./bin/rails credentials:edit 
+
 EDITOR='subl --wait' ./bin/rails credentials:edit
 
-
 gcp:
-  db_password: IpbXXpOEFNOcFpDQOFglMrFNUhkjUIoxENJxBCERUTUmWYuOvp
+  db_password: qMMCnXvLNwmluQyeSCYoPeXpPwDnVcuSZaqzgXQHQddHubFeXm
+  db_database: bullet-train-0-db-0
+  db_username: bullet-train-0-user-0
+  db_instance_host: heidless-ror-6:europe-west1:bullet-train-0-instance-0
 aws_credentials:
-    S3_ACCESS_KEY: AKIAYUPGERUW63AOF5TE
-    S3_SECRET_KEY: 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
-    S3_BUCKET: heidless-photoappimages
-    AWS_REGION: eu-west-2   
+  S3_ACCESS_KEY: AKIAYUPGERUW63AOF5TE
+  S3_SECRET_KEY: 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
+  S3_BUCKET: heidless-photoappimages
+  AWS_REGION: eu-west-2   
 iex_client:
   api_key: pk_808439936a93476fb7558256a9b6da5c
   secret_api_key: sk_7de5c9cf9cb74ec3ad57523bc62cc986
@@ -392,18 +417,18 @@ gcloud secrets add-iam-policy-binding $GCP_SECRET_NAME \
 cd PROJECT_ROOT
 touch .env
 ---
-echo PROJECT: $GCP_PROJECT
-echo PROJECT_ID: $GCP_PROJECT_ID
-echo DB_NAME: $GCP_DB_NAME
-echo DB_USER: $GCP_DB_USER
-echo BUCKET: $GCP_BUCKET
-echo SENDGRID_API: $GCP_SENDGRID_API_KEY
 echo ' '
 echo "PRODUCTION_DB_NAME: $GCP_DB_NAME" > .env
 echo "GOOGLE_PROJECT_ID: $GCP_PROJECT_ID" >> .env
 echo "CLOUD_SQL_CONNECTION_NAME: $GCP_PROJECT:$GCP_REGION:$GCP_INSTANCE" >> .env
 echo "PRODUCTION_DB_USERNAME: $GCP_DB_USER" >> .env
 echo "STORAGE_BUCKET_NAME: $GCP_BUCKET" >> .env
+
+#echo "AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}" >> .env
+#echo "AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}" >> .env
+#echo "AWS_S3_BUCKET: ${AWS_S3_BUCKET}" >> .env
+#echo "AWS_S3_REGION: ${AWS_S3_REGION}" >> .env
+
 echo "SENDGRID_API_KEY: $GCP_SENDGRID_API_KEY" >> .env
 more .env
 
@@ -411,14 +436,13 @@ more .env
 
 ### Grant Cloud Build access to Cloud SQL
 ```
-#echo GCP_SECRET_NAME: $GCP_SECRET_NAME
-#echo GCP_PROJECT: $GCP_PROJECT
-#echo GCP_PROJECT_ID: $GCP_PROJECT_ID
-#echo ' '
-
-#gcloud projects add-iam-policy-binding $GCP_PROJECT \
-#    --member serviceAccount:$GCP_PROJECT_ID@cloudbuild.gserviceaccount.com \
-#    --role roles/cloudsql.client
+echo GCP_SECRET_NAME: $GCP_SECRET_NAME
+echo GCP_PROJECT: $GCP_PROJECT
+echo GCP_PROJECT_ID: $GCP_PROJECT_ID
+echo ' '
+gcloud projects add-iam-policy-binding $GCP_PROJECT \
+    --member serviceAccount:$GCP_PROJECT_ID@cloudbuild.gserviceaccount.com \
+    --role roles/cloudsql.client
 
 ```
 
@@ -435,35 +459,38 @@ rvm use --default 3.3.
 
 
 ```
-echo $GCP_SERVICE_NAME
-echo $GCP_INSTANCE
-echo $GCP_REGION
-echo $GCP_SECRET_NAME
+echo ' '
+echo GCP_SERVICE_NAME: ${GCP_SERVICE_NAME}
+echo GCP_INSTANCE: ${GCP_INSTANCE}
+echo GCP_REGION: ${GCP_REGION}
+echo GCP_SECRET_NAME: ${GCP_SECRET_NAME}
 echo ' '
 
 gcloud builds submit --config cloudbuild.yaml \
-    --substitutions _SERVICE_NAME=$GCP_SERVICE_NAME,_INSTANCE_NAME=$GCP_INSTANCE,_REGION=$GCP_REGION,_SECRET_NAME=$GCP_SECRET_NAME 
+    --substitutions _SERVICE_NAME=${GCP_SERVICE_NAME},_INSTANCE_NAME=${GCP_INSTANCE},_REGION=${GCP_REGION},_SECRET_NAME=${GCP_SECRET_NAME} 
 
 
 ---
-echo GCP_SERVICE_NAME: $GCP_SERVICE_NAME
-echo GCP_REGION: $GCP_REGION
-echo GCP_PROJECT: $GCP_PROJECT
-echo GCP_INSTANCE: $GCP_INSTANCE
-echo GCP_SECRET_NAME: $GCP_SECRET_NAME
+echo ' '
+echo GCP_SERVICE_NAME: ${GCP_SERVICE_NAME}
+echo GCP_REGION: ${GCP_REGION}
+echo GCP_PROJECT: ${GCP_PROJECT}
+echo GCP_INSTANCE: ${GCP_INSTANCE}
+echo GCP_SECRET_NAME: ${GCP_SECRET_NAME}
 echo ' '
 
-gcloud run deploy $GCP_SERVICE_NAME \
+gcloud run deploy ${GCP_SERVICE_NAME} \
      --platform managed \
-     --region $GCP_REGION \
-     --image gcr.io/$GCP_PROJECT/$GCP_SERVICE_NAME \
-     --add-cloudsql-instances $GCP_PROJECT:$GCP_REGION:$GCP_INSTANCE \
+     --region ${GCP_REGION} \
+     --image gcr.io/${GCP_PROJECT}/${GCP_SERVICE_NAME} \
+     --add-cloudsql-instances ${GCP_PROJECT}:${GCP_REGION}:${GCP_INSTANCE} \
      --allow-unauthenticated
 
 
 #############################
 ## CLOUD RUN: domain mappings
-gcloud domains list-user-verified
+gcloud domains list-user-verifiedls
+
 
 DOMAIN=westgreenconnection.co.uk
 echo DOMAIN: ${DOMAIN}
