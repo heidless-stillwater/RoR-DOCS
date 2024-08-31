@@ -253,6 +253,8 @@ vi db/migrate/*_change_views_for_users.rb
 
 --
 
+## devise specs : generate devise tests
+bin/rails generate devise:specs User
 
 
 ```
