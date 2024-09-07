@@ -16,8 +16,8 @@
 # install
 gem install rails 
 
-gem install rails -v 6.1.7.7
-rails  _6.1.7.7_ new rails-test-0 -d postgresql
+#gem install rails -v 6.1.7.7
+#rails  _6.1.7.7_ new rails-test-0 -d postgresql
 
 #/bin/zsh --login
 #export PATH="/home/heidless/.rvm/gems/ruby-3.2.2/bin:$PATH"
@@ -29,6 +29,30 @@ rails  _6.1.7.7_ new rails-test-0 -d postgresql
 ```
 #
 # rails new blog_demo -b bootstrap
+
+APP_NAME=heidless-blog-demo-app-0
+RAILS_BUILD_VERSION=7.2.1
+
+#rails _${RAILS_BUILD_VERSION}_ new ${APP_NAME} -t --database=postgresql -b bootstrap
+
+rails _${RAILS_BUILD_VERSION}_ new ${APP_NAME} -t -b bootstrap
+
+cd ${APP_NAME}
+
+vi Gemfile
+--
+gem 'devise'
+
+group :development do
+  gem 'rspec-rails'
+  ...
+--
+bundle install
+
+
+
+
+
 
 rails new blog_demo
 
@@ -160,6 +184,7 @@ vi db->migrate->*_add_views_to_posts
   add_column :posts, :views, :integer, default: 0
 
 --
+
 ```
 ---
 ---

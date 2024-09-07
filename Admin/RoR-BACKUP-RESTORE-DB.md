@@ -264,15 +264,18 @@ cd ..
 ##################################################################################
 
 
-<!-- export BK_DB_NAME=rails_pdf_ninja_0_development -->q
-export BK_DB_NAME=active_storage_tst_2_development
+<!-- export BK_DB_NAME=rails_pdf_ninja_0_development -->
+export BK_DB_NAME=heidless_demo_app_0_development
 echo BK_DB_NAME: ${BK_DB_NAME}
 
-export BK_COMMENT='-0-BASE-INSTALL-'
+export BK_COMMENT='-0-pre-users-0-'
 echo BK_COMMENT: ${BK_COMMENT}
 
 export BK_TIMESTAMP=`date +%s`
 echo TIMESTAMP: ${BK_TIMESTAMP}
+
+export BK_FILE=${BK_DB_NAME}-${BK_COMMENT}-${BK_TIMESTAMP}.pgsql
+echo BK_FILE: ${BK_FILE}
 
 export BK_FILE=${BK_DB_NAME}-${BK_COMMENT}-${BK_TIMESTAMP}.pgsql
 echo BK_FILE: ${BK_FILE}

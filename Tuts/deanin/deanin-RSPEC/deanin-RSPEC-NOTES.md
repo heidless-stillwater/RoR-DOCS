@@ -15,6 +15,7 @@ export PATH="/home/heidless/.rvm/gems/ruby-3.2.2/bin:$PATH"
 /bin/zsh --login && rvm use --default 3.2.2
 
 # new app: '-t' = 'skip test files = '--skip-test'
+
 rails _6.1.7.7_ new <APP_NAME> -d postgresql -t
 
 ```
